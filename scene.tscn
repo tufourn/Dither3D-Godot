@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://5basuqgutess"]
+
+[ext_resource type="Shader" uid="uid://dg24wxtbt15n5" path="res://Shaders/DitherOpaque.gdshader" id="1_u3cyc"]
+[ext_resource type="Texture2D" uid="uid://sfgx8ttquyyx" path="res://icon.svg" id="2_m7jmp"]
+[ext_resource type="Texture2D" uid="uid://wi7iaephtgo3" path="res://DitherTextures/Dither3D_8x8_Ramp.tres" id="3_u3cyc"]
+[ext_resource type="ImageTexture3D" uid="uid://d8sdsbbtaogw" path="res://DitherTextures/Dither3D_8x8.tres" id="4_m7jmp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2q8x"]
+render_priority = 0
+shader = ExtResource("1_u3cyc")
+shader_parameter/albedo_texture = ExtResource("2_m7jmp")
+shader_parameter/dither_tex = ExtResource("4_m7jmp")
+shader_parameter/dither_ramp_tex = ExtResource("3_u3cyc")
+shader_parameter/scale = 5.0
+shader_parameter/size_variability = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/stretch_smoothness = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_112p8"]
+material = SubResource("ShaderMaterial_j2q8x")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2u21"]
+render_priority = 0
+shader = ExtResource("1_u3cyc")
+shader_parameter/albedo_texture = ExtResource("2_m7jmp")
+shader_parameter/dither_tex = ExtResource("4_m7jmp")
+shader_parameter/dither_ramp_tex = ExtResource("3_u3cyc")
+shader_parameter/scale = 5.0
+shader_parameter/size_variability = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/stretch_smoothness = 1.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bss38"]
+material = SubResource("ShaderMaterial_e2u21")
+size = Vector2(10, 10)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_112p8"]
+render_priority = 0
+shader = ExtResource("1_u3cyc")
+shader_parameter/albedo_texture = ExtResource("2_m7jmp")
+shader_parameter/dither_tex = ExtResource("4_m7jmp")
+shader_parameter/dither_ramp_tex = ExtResource("3_u3cyc")
+shader_parameter/scale = 5.0
+shader_parameter/size_variability = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/stretch_smoothness = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_tda05"]
+material = SubResource("ShaderMaterial_112p8")
+
+[node name="Scene" type="Node"]
+
+[node name="box" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, -0.0012318, -9.73942e-05, 0.0012309, 0.999962, -0.00858943, 0.000108001, 0.00858929, 0.999963, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_112p8")
+
+[node name="plane" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, -0.0006355, -0.000909435, 0.00063373, 0.999998, -0.00193934, 0.000910669, 0.00193876, 0.999998, 0, 0, 0)
+mesh = SubResource("PlaneMesh_bss38")
+
+[node name="sphere" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999999, -6.10955e-05, 0.00132414, 6.68502e-05, 0.999991, -0.00433988, -0.00132387, 0.00433996, 0.99999, -1.475, 0.5, -0.669684)
+mesh = SubResource("SphereMesh_tda05")
