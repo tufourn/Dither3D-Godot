@@ -1,0 +1,13 @@
+[gd_resource type="ImageTexture" load_steps=2 format=3 uid="uid://bur3cgsbgiv84"]
+
+[sub_resource type="Image" id="Image_niree"]
+data = {
+"data": PackedByteArray(0, 42, 59, 63, 79, 86, 95, 100, 108, 116, 123, 127, 132, 142, 155, 177),
+"format": "Lum8",
+"height": 1,
+"mipmaps": false,
+"width": 16
+}
+
+[resource]
+image = SubResource("Image_niree")

@@ -1,0 +1,13 @@
+[gd_resource type="ImageTexture3D" load_steps=2 format=4 uid="uid://1o5u7q6isr1i"]
+
+[sub_resource type="Image" id="Image_w18in"]
+data = {
+"data": PackedByteArray("8+TUxLOjkoGBkqOzxNTk8+Tbzr+woI9/f4+gsL/O2+TUzsS3qZqLe3uLmqm3xM7UxL+3rKCShHV1hJKgrLe/xLOwqaCViHttbXuIlaCpsLOjoJqSiH1xZGRxfYiSmqCjko+LhHtxZVlZZXF7hIuPkoF/e3VtZFlOTllkbXV7f4GBf3t1bWRZTk5ZZG11e3+Bko+LhHtxZVlZZXF7hIuPkqOgmpKIfXFkZHF9iJKaoKOzsKmglYh7bW17iJWgqbCzxL+3rKCShHV1hJKgrLe/xNTOxLepmot7e4uaqbfEztTk286/sKCPf3+PoLC/ztvk8+TUxLOjkoGBkqOzxNTk8w=="),
+"format": "Lum8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[resource]
+_images = Array[Image]([SubResource("Image_w18in")])

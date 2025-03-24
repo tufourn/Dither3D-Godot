@@ -1,0 +1,13 @@
+[gd_resource type="ImageTexture" load_steps=2 format=3 uid="uid://b3kclcfb5xa6j"]
+
+[sub_resource type="Image" id="Image_r1fgp"]
+data = {
+"data": PackedByteArray(0, 26, 37, 47, 54, 60, 65, 71, 77, 82, 86, 90, 94, 96, 100, 105, 108, 111, 114, 118, 121, 124, 127, 130, 133, 137, 142, 147, 153, 160, 171, 224),
+"format": "Lum8",
+"height": 1,
+"mipmaps": false,
+"width": 32
+}
+
+[resource]
+image = SubResource("Image_r1fgp")
