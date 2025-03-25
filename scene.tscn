@@ -61,3 +61,10 @@ mesh = SubResource("PlaneMesh_bss38")
 [node name="sphere" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.999999, -6.10955e-05, 0.00132414, 6.68502e-05, 0.999991, -0.00433988, -0.00132387, 0.00433996, 0.99999, -1.475, 0.5, -0.669684)
 mesh = SubResource("SphereMesh_tda05")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.758134, -0.211226, 0.616941, 0, 0.946085, 0.323917, -0.652098, 0.245573, -0.71726, 0.91, 1.37, -2.294)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.346642, 0.511374, 0.786344, -0.259265, -0.753428, 0.604259, 0.901455, -0.413332, -0.128588, 0.897007, 2.73016, -1.51605)
+shadow_enabled = true
