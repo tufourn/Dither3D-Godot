@@ -5,7 +5,7 @@ uniform float size_variability : hint_range(0.0, 1.0) = 0.0;
 uniform float contrast : hint_range(0.0, 2.0) = 1.0;
 uniform float stretch_smoothness : hint_range(0.0, 2.0) = 1.0;
 
-vec4 get_dither_3d(vec2 uv_dither, vec2 dx, vec2 dy, float brightness) {
+vec4 get_dither_3d(vec2 uv, vec2 dx, vec2 dy, float brightness) {
 	ivec3 dither_tex_size = textureSize(dither_tex, 0);
 	
 	float x_res = float(dither_tex_size.x);
@@ -46,43 +46,43 @@ vec4 get_dither_3d(vec2 uv_dither, vec2 dx, vec2 dy, float brightness) {
 			pow(brightness_curve * 2.0 + 0.001, -(1.0 - size_variability));
 	spacing *= brightness_spacing_multiplier;
 	
-	// find the power of two level that corresponds to the dot spacing
+	// divide uv by nearest lower power of two level corresponding to spacing
 	float spacing_log = log2(spacing);
-	int pattern_scale_level = int(floor(spacing_log));
-	float f = spacing_log - float(pattern_scale_level);
-	
-	// uv coordinates in the current fractal level
-	vec2 uv = uv_dither / exp2(float(pattern_scale_level));
+	float pattern_scale_level = floor(spacing_log);
+	vec2 uv_dither = uv / exp2(pattern_scale_level);
 	
 	// get the third coordinate for the 3d texture lookup
 	// first layer is the one that has 1/4 of the dots
 	// last layer is the one with all the dots
-	float sub_layer = mix(0.25 * z_res, z_res, 1.0 - f);
+	float frac = spacing_log - pattern_scale_level;
+	float sub_layer = mix(0.25 * z_res, z_res, 1.0 - frac);
 	
+	// texels are half a texel off from texture border
 	// subtract half a texel and normalize to 0-1 range
 	sub_layer = (sub_layer - 0.5) * inv_z_res;
 	
 	// sample the 3d texture
-	float pattern = texture(dither_tex, vec3(uv, sub_layer)).r;
+	float pattern = texture(dither_tex, vec3(uv_dither, sub_layer)).r;
 	
 	// create sharp dots from radial gradient textures by increasing contrast
 	float dot_contrast = contrast * scale_exp * brightness_spacing_multiplier * 0.1;
 	
-	// base contrast on the highest frequency to avoid aliasing
-	// scale contrast by smallest freq relative to highest freq
-	// adjust compensation with stretch_smoothness
+	// contrast is based on the highest frequency to avoid aliasing
+	// scale contrast by ratio of smallest frequency and highest frequency
+	// adjust compensation with stretch_smoothness factor
 	dot_contrast *= pow(freq.y / freq.x, stretch_smoothness);
 	
-	// lerp towards the base value of the original brightness the lower the contrast is
+	// lerp towards the base value of the original brightness as the contrast decreases
+	// this specific formula is taken from the original implementation
 	float base_val = mix(0.5, brightness, clamp(1.05 / (1.0 + dot_contrast), 0.0, 1.0));
 	
-	// brighter -> lower threshold
+	// the brighter we want the output, the lower the threshold we need to use
 	float threshold = 1.0 - brightness_curve;
 	
-	// get pattern value relative to threshold, scale according to contrast and add base value
+	// get pattern value relative to threshold, scale by contrast and add base value
 	float bw = clamp((pattern - threshold) * dot_contrast + base_val, 0.0, 1.0);
 	
-	return vec4(bw, fract(uv.x), fract(uv.y), sub_layer);
+	return vec4(bw, fract(uv_dither.x), fract(uv_dither.y), sub_layer);
 }
 
 float get_grayscale(vec4 color) {
